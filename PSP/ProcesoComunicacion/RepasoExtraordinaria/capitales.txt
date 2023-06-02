@@ -1,4 +1,0 @@
-1.¿Cual es la capital de España?.Madrid.Cádiz.Barcelona.Zaragoza
-2.¿Cual es la capital de Andalucia?.Jerez.Sevilla.Barcelona.Zaragoza
-1.¿Cual es la capital de Madrid?.Madrid.Getafe.Barcelona.Zaragoza
-3.¿Cual es la capital de Cataluña?.Madrid.Cádiz.Barcelona.Zaragoza
