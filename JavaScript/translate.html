@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor con Google Translate de Español a Inglés</title>
+</head>
+<body>
+    <h1>Traductor con Google Translate de Español a Inglés</h1>
+    <p>Texto original</p>
+    <select name="idiomas" id="idi">
+        <option value="es">Español</option>
+        <option value="en">Ingles</option>
+        <option value="fr">Frances</option>
+    </select>
+    <br>
+    <input type="text" id="primero"> <br>
+    <input type="button" value="Traducir" id="trans"></input> <input type="button" value="Detectar idioma" id="detid"></input><input type="button" value="Automático en castellano" id="autcast"> </input>
+    <br>
+    <p>Texto traducido</p> 
+    <select name="idiomas2" id="idi2">
+        <option value="es">Español</option>
+        <option value="en">Ingles</option>
+        <option value="fr">Frances</option>
+    </select>
+    <br>
+    <input type="text" id="segundo">
+    <br>
+    <input type="text" id="idDetectado">
+
+
+    <script>
+            document.getElementById("trans").addEventListener("click",()=>traducir(),false);
+            //Se crea la variable para el detectado
+            let detectado
+            //Se crea el evemto para activar el método cuando se cree
+            document.getElementById("detid").addEventListener("click",()=>detectar(),false);
+            //Se crea el evento para activar el método igual español
+            document.getElementById("autcast").addEventListener("click",()=>traducirEspañol(),false);
+            //se crea el método
+            function detectar(){
+            let texto=document.getElementById("primero").value;
+                //Se crea la variable para detectar la URL y se añade la selección
+            const encodedParams = new URLSearchParams();
+            encodedParams.append("q", texto);
+            const options = {
+	    method: 'POST',
+	    headers: {
+		'content-type': 'application/x-www-form-urlencoded',
+		'Accept-Encoding': 'application/gzip',
+		'X-RapidAPI-Key': 'ed00d643e0msh7d92dd4510697dbp172abajsn9557641673fa',
+		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+	    },
+	    body: encodedParams
+                };
+fetch('https://google-translate1.p.rapidapi.com/language/translate/v2/detect', options)
+	.then(response => response.json())
+    //Response me lo pasa JSON y en console.log te muestra la información obtenida desglosada
+	.then(response => {console.log(response)
+                    document.getElementById("idDetectado").value=response.data.detections[0][0].language;
+                })
+            
+            .catch(err => console.error(err));
+                
+            }
+            function traducir(){
+                //Creas una variable para no meterlo completo
+                let texto=document.getElementById("primero").value;
+
+                const encodedParams= new URLSearchParams();
+                encodedParams.append("q",texto);
+                encodedParams.append("source",document.getElementsByName("idiomas")[0].value);
+                encodedParams.append("target",document.getElementsByName("idiomas2")[0].value);
+                const options = {
+	                method: 'POST',
+                    	headers: {
+		                    'content-type': 'application/x-www-form-urlencoded',
+                                'Accept-Encoding': 'application/gzip',
+                                'X-RapidAPI-Key': 'ed00d643e0msh7d92dd4510697dbp172abajsn9557641673fa',
+                                'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+                            },
+                            body: encodedParams
+                        };
+                        fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+                            .then(response => response.json())
+                            .then(response => {console.log(response)
+                                document.getElementById("segundo").value=response.data.translations[0].translatedText;
+                        })
+                        .catch(err => console.error(err));
+                                    }
+
+            function traducirEspañol(){
+                        let origen;
+                        let texto=document.getElementById("primero").value;
+                        const encodedParams = new URLSearchParams();
+                    encodedParams.append("q", texto);
+                    const options = {
+                    method: 'POST',
+                  headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'Accept-Encoding': 'application/gzip',
+                        'X-RapidAPI-Key': 'ed00d643e0msh7d92dd4510697dbp172abajsn9557641673fa',
+                        'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+                    },
+                body: encodedParams
+                        };
+                    fetch('https://google-translate1.p.rapidapi.com/language/translate/v2/detect', options)
+                        .then(response => response.json())
+                        //Response me lo pasa JSON y en console.log te muestra la información obtenida desglosada
+                        .then(response => {console.log(response)
+                                        //Se detecta el idioma origen
+                                        origen=document.getElementById("idDetectado").value=response.data.detections[0][0].language;
+                                        //Se compara con el idioma de origen y si es origen
+                                        encodedParams.append("source",origen);
+                                        encodedParams.append("target","es");
+                                  
+                    fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+                            .then(response => response.json())
+                            .then(response => {console.log(response)
+                                document.getElementById("segundo").value=response.data.translations[0].translatedText;
+                             }).catch(err => console.error(err)); 
+
+                        }) .catch(err => console.error(err)); 
+
+                                }
+    </script>
+</body>
+</html>

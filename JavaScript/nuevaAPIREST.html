@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Tabla APIREST</title>
+</head>
+<script>
+ 
+function start(){
+    const cors='https://cors-anywhere.herokuapp.com/'
+    const youUrl=/*cors*/ 'https://nodejs-mysql-restapi-production-d8bd.up.railway.app/api/employees'
+    fetch(youUrl)
+    .then((response)=> response.json())
+    .then(data => console.log(data))
+    var mybody=
+    document.getElementsByTagName("body")[0];
+    //creamos la table and <tbody> elements
+        mytable=argument= document.createElement("table");
+        mytableBody= document.createElement("tbody");
+        for(var j=0; j<data.length; j++){
+            mycurrent_row=document.createElement("tr");
+            for (var i=0; i<data.length; i++){
+                mycurrent_cell=document.createElement("td");
+                currentText= document.createTextNode("")
+                mycurrent_cell(currentText);
+                mycurrent_row(mycurrent_cell);
+            }
+                mytableBody.appendChild(mycurrent_row);
+        }
+        mytable.appendChild(mytableBody);
+    
+}
+</script>
+</html>
